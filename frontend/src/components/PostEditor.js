@@ -27,7 +27,7 @@ class PostEditor extends Component {
         title: String(""),
         body: String(""),
         author: String(""),
-        category:categoryName
+        category: categoryName
       };
     }
   }
@@ -86,7 +86,7 @@ class PostEditor extends Component {
 
   setCategory = (event) => {
     this.setState({
-      category: event.target.value.name
+      category: event.target.value
     });
   };
 
@@ -103,7 +103,7 @@ class PostEditor extends Component {
                 <div>
                   <Form.Field>
                     Category
-                      <select value={this.props.categories[0]} onChange={this.setCategory}>
+                      <select defaultValue={this.props.categories[0]} onChange={this.setCategory}>
                       {this.props.categories.map(category => (
                         <option
                         key={category.name}

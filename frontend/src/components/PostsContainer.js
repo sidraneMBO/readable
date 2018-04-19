@@ -26,7 +26,6 @@ class PostContainer extends Component {
               />
             </div>
           : null
-
         ))
       }
       </div>

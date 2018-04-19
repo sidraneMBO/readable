@@ -5,23 +5,23 @@ import { Grid, Segment } from 'semantic-ui-react'
 
 class CategoryList extends Component {
   render() {
-    return (      
+    return (
       <Grid columns='equal'>
         <Grid.Column>
-        <Segment>
-          <Link to="/">All Posts</Link>
-        </Segment>
+        <Link to="/">
+          <Segment>
+            All Posts
+          </Segment>
+        </Link>
         </Grid.Column>
       {
         this.props.categories.map((category) => (
           <Grid.Column key={category.name}>
-            <Segment>
-              <Link
-              to={"/" + category.name}
-              >
+            <Link to={"/" + category.name}>
+              <Segment>
                 {category.name}
-              </Link>
-            </Segment>
+              </Segment>
+            </Link>            
           </Grid.Column>
         ))
       }
