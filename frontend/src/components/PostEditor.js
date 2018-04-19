@@ -4,6 +4,7 @@ import Button from './Button';
 import * as GuidUtils from '../util/GuidUtils';
 import { updatePost, postPost } from '../actions/PostActions';
 import { connect } from 'react-redux';
+import { Form, Divider, Segment, Header } from 'semantic-ui-react';
 
 class PostEditor extends Component {
   state: {};
@@ -19,12 +20,14 @@ class PostEditor extends Component {
         category: this.props.category
       };
     } else {
+      const categoryName = this.props.categories[0] ? this.props.categories[0].name : String("");
+
       this.state = {
         id: String(GuidUtils.guid()),
         title: String(""),
         body: String(""),
         author: String(""),
-        category: this.props.categories[0].name
+        category:categoryName
       };
     }
   }
@@ -89,46 +92,57 @@ class PostEditor extends Component {
 
   render() {
     return (
-      <div className="PostEditor">
+      <Segment compact={true}>
       {
         this.props.post == null
         ? <div>
-            <div>
-              Category:
-                <select value={this.props.categories[0]} onChange={this.setCategory}>
-                {this.props.categories.map(category => (
-                  <option
-                  key={category.name}
-                  value={category.name}
-                  >{category.name}</option>
-                ))}
-                <option value="none">None</option>
-              </select>
-            </div>
-            <div>
-              Title: <input type="text" defaultValue={this.state.title} onChange={this.setTitle} />
-            </div>
-            <div>
-              Body: <input type="text" defaultValue={this.state.body} onChange={this.setBody} />
-            </div>
-            <div>
-              Author: <input type="text" defaultValue={this.state.author} onChange={this.setAuthor} />
-            </div>
+            <Header as='h3'>Add Post</Header>
+            <Divider></Divider>
+            <Form>
+              <Form.Group widths='equal'>
+                <div>
+                  <Form.Field>
+                    Category
+                      <select value={this.props.categories[0]} onChange={this.setCategory}>
+                      {this.props.categories.map(category => (
+                        <option
+                        key={category.name}
+                        value={category.name}
+                        >{category.name}</option>
+                      ))}
+                      <option value="none">None</option>
+                    </select>
+                  </Form.Field>
+
+                  <Form.Field>
+                    <Form.Input fluid label='Title' placeholder='Title' defaultValue={this.state.title} onChange={this.setTitle} />
+                  </Form.Field>
+
+                  <Form.Field>
+                    <Form.TextArea label='Body' placeholder='Body' defaultValue={this.state.body} onChange={this.setBody} />
+                  </Form.Field>
+
+                  <Form.Input fluid label='Author' placeholder='Author' defaultValue={this.state.author} onChange={this.setAuthor} />
+                </div>
+              </Form.Group>
+            </Form>
           </div>
-        : <div>
-            <div>
-              Title: <input type="text" defaultValue={this.state.title} onChange={this.setTitle} />
-            </div>
-            <div>
-              Body: <input type="text" defaultValue={this.state.body} onChange={this.setBody} />
-            </div>
-          </div>
+        : <Form>
+            <Form.Group widths='equal'>
+              <Form.Field>
+                <Form.Input label='Title' placeholder='Title' defaultValue={this.state.title} onChange={this.setTitle} />
+                <Form.TextArea label='Body' placeholder='Body' defaultValue={this.state.body} onChange={this.setBody} />
+              </Form.Field>
+            </Form.Group>
+          </Form>
       }
       <Button
       text="Save"
       action={this.savePost}
+      primary={true}
+      icon="save"
       />
-      </div>
+      </Segment>
     );
   }
 }

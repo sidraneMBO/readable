@@ -7,10 +7,11 @@ export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
 export const EDIT_POST_VOTE = 'EDIT_VOTE';
 
-export const sortPosts = (posts, orderBy) => ({
+export const sortPosts = (posts, orderBy, ascending) => ({
   type: SORT_POSTS,
   posts,
-  orderBy
+  orderBy,
+  ascending
 });
 
 export const receivePosts = (posts) => ({
@@ -28,9 +29,9 @@ export const editPost = (post) => ({
     post
 });
 
-export const deletePost = (postId) => ({
+export const deletePost = (post) => ({
   type: DELETE_POST,
-  postId
+  post
 });
 
 export const editPostVote = (post) => ({
@@ -70,7 +71,7 @@ export const postPost = (post) => dispatch => (
 export const removePost = (postId) => dispatch => (
   ReadableDataProvider
     .deletePost(postId)
-    .then(post => dispatch(deletePost(post.id)))
+    .then(post => dispatch(deletePost(post)))
 );
 
 export const updateVote = (postId, option) => dispatch => (

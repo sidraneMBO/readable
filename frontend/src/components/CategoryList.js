@@ -1,23 +1,31 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
+import { Grid, Segment } from 'semantic-ui-react'
 
 class CategoryList extends Component {
   render() {
-    return (
-      <div>
+    return (      
+      <Grid columns='equal'>
+        <Grid.Column>
+        <Segment>
+          <Link to="/">All Posts</Link>
+        </Segment>
+        </Grid.Column>
       {
         this.props.categories.map((category) => (
-          <div key={category.name}>
-            <Link
-            to={"/" + category.name}
-            >
-              {category.name}
-            </Link>
-          </div>
+          <Grid.Column key={category.name}>
+            <Segment>
+              <Link
+              to={"/" + category.name}
+              >
+                {category.name}
+              </Link>
+            </Segment>
+          </Grid.Column>
         ))
       }
-      </div>
+      </Grid>
     );
   }
 }

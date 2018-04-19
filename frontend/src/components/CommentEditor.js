@@ -4,6 +4,7 @@ import * as GuidUtils from '../util/GuidUtils';
 import Button from './Button';
 import { updateComment, postComment } from '../actions/CommentActions';
 import { connect } from 'react-redux';
+import { Form } from 'semantic-ui-react';
 
 class CommentEditor extends Component {
   state: {};
@@ -73,20 +74,26 @@ class CommentEditor extends Component {
 
   render() {
     return (
-      <div className="CommentEditor">
+      <div>
       {
         this.props.comment == null
-        ? <div>
-            Body: <input type="text" defaultValue={this.state.body} onChange={this.setBody} />
-            Author: <input type="text" defaultValue={this.state.author} onChange={this.setAuthor} />
-          </div>
-        : <div>
-            <input type="text" defaultValue={this.state.body} onChange={this.setBody} />
-          </div>
+        ? <Form>
+            <Form.Field>
+              <Form.TextArea label='Body' placeholder='Body' defaultValue={this.state.body} onChange={this.setBody} />
+            </Form.Field>
+            <Form.Field>
+              <Form.Input fluid label='Author' placeholder='Author' defaultValue={this.state.author} onChange={this.setAuthor} />
+            </Form.Field>
+          </Form>
+        : <Form>
+            <Form.TextArea label='Body' placeholder='Body' defaultValue={this.state.body} onChange={this.setBody} />
+          </Form>
       }
       <Button
       text="Save"
       action={this.saveComment}
+      primary={true}
+      icon="save"
       />
       </div>
     );

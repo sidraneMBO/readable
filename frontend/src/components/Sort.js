@@ -12,6 +12,7 @@ class Sort extends Component {
       <Button
       text={this.props.text}
       action={this.sortItems}
+      icon="sort"
       />
     );
   }

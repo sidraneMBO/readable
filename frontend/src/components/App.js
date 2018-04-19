@@ -15,19 +15,30 @@ import { sortPosts, OrderBy } from '../actions/PostActions';
 import { fetchPosts } from '../actions/PostActions';
 
 class App extends Component {
+  state: {};
 
-  // TODO: Figure out the categories
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      sortVoteAscending: true,
+      sortTimestampAscending: true
+    };
+  }
+
   componentDidMount() {
     this.props.dispatch(fetchPosts());
     this.props.dispatch(fetchCategories());
   }
 
   sortPostsByVotes = () => {
-    this.props.dispatch(sortPosts(this.props.posts, OrderBy.VOTE_SCORE));
+    this.props.dispatch(sortPosts(this.props.posts, OrderBy.VOTE_SCORE, this.state.sortVoteAscending));
+    this.state.sortVoteAscending = !this.state.sortVoteAscending;
   };
 
   sortPostsByTimestamp = () => {
-    this.props.dispatch(sortPosts(this.props.posts, OrderBy.TIMESTAMP));
+    this.props.dispatch(sortPosts(this.props.posts, OrderBy.TIMESTAMP, this.state.sortTimestampAscending));
+    this.state.sortTimestampAscending = !this.state.sortTimestampAscending;
   };
 
   getPostDetails = (postId: string) => {
@@ -66,6 +77,8 @@ class App extends Component {
             <Button
             text="Add New Post"
             action={this.addPost}
+            primary={true}
+            icon="edit"
             />
           </div>
         )}

@@ -5,6 +5,7 @@ import * as ReadableDataProvider from '../util/ReadableDataProvider';
 import { removeComment, updateVote } from '../actions/CommentActions';
 import { connect } from 'react-redux';
 import Vote from './Vote';
+import { Comment as StyledComment, Form, Header, Icon } from 'semantic-ui-react';
 
 class Comment extends Component {
   state: {};
@@ -43,36 +44,43 @@ class Comment extends Component {
 
   render() {
     return (
-      <div className="Comment">
-      {
-        this.state.editing
-        ? <div>
-            <CommentEditor
-            comment={this.props.comment}
-            onSave={this.hideEditor}
-            postId={this.props.postId}
-            />
-          </div>
-        : <div>
-            <div>{this.props.comment.body}</div>
-            <div>Author: {this.props.comment.author}</div>
-            <div>Current Score: {this.props.comment.voteScore}</div>
-            <Vote
-            upVote={this.upVote}
-            downVote={this.downVote}
-            />
-            <Button
-            text="Edit"
-            action={this.editComment}
-            />
-            <Button
-            text="Delete"
-            action={this.deleteComment}
-            />
-          </div>
-
-      }
-      </div>
+      <StyledComment>
+        <StyledComment.Content>
+          <StyledComment.Author as='a'>{this.props.comment.author}</StyledComment.Author>
+          <StyledComment.Metadata>
+            <div>
+              <Icon name='star' />
+              {this.props.comment.voteScore}
+            </div>
+          </StyledComment.Metadata>
+          {
+            this.state.editing
+            ? <CommentEditor
+              comment={this.props.comment}
+              onSave={this.hideEditor}
+              postId={this.props.postId}
+              />
+            : <StyledComment.Text>{this.props.comment.body}</StyledComment.Text>
+          }
+            <StyledComment.Actions>
+              <Vote
+              upVote={this.upVote}
+              downVote={this.downVote}
+              />
+              <Button
+              text="Edit"
+              action={this.editComment}
+              primary={true}
+              icon="edit"
+              />
+              <Button
+              text="Delete"
+              action={this.deleteComment}
+              icon="delete"
+              />
+            </StyledComment.Actions>
+          </StyledComment.Content>
+        </StyledComment>
     );
   }
 }

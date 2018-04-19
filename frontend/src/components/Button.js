@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button as StyledButton } from 'semantic-ui-react';
 
 class Button extends Component {
   onClickCallback = () => {
@@ -7,11 +8,8 @@ class Button extends Component {
 
   render() {
     return (
-      <button
-      type="button"
-      onClick={this.onClickCallback}
-      >{this.props.text}
-      </button>
+      <StyledButton content={this.props.text} onClick={this.onClickCallback} icon={this.props.icon} primary={this.props.primary} size={this.props.size}>
+      </StyledButton>
     );
   }
 }

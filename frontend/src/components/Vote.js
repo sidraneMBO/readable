@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Button as StyledButton, Icon } from 'semantic-ui-react';
 
 class Vote extends Component {
 
@@ -13,17 +14,13 @@ class Vote extends Component {
   render() {
     return (
       <div>
-        <button
-        type="button"
-        onClick={this.upVote}
-        >UPVOTE
-        </button>
+        <StyledButton onClick={this.upVote} icon size="mini">
+          <Icon name='chevron up'/>
+        </StyledButton>
 
-        <button
-        type="button"
-        onClick={this.downVote}
-        >DOWNVOTE
-        </button>
+        <StyledButton onClick={this.downVote} icon size="mini">
+          <Icon name='chevron down'/>
+        </StyledButton>
       </div>
     );
   }

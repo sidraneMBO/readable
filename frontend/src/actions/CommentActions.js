@@ -1,4 +1,5 @@
 import * as ReadableDataProvider from '../util/ReadableDataProvider';
+import { fetchPosts } from './PostActions';
 
 export const RECEIVE_COMMENTS = 'RECEIVE_COMMENTS';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
@@ -52,12 +53,14 @@ export const postComment = (comment) => dispatch => (
        comment.author,
        comment.parentId)
       .then(updatedComment => dispatch(addComment(updatedComment)))
+      .then(dispatch(fetchPosts()))
 );
 
 export const removeComment = (comment) => dispatch => (
   ReadableDataProvider
       .deleteComment(comment.id)
       .then(comment => dispatch(deleteComment(comment)))
+      .then(dispatch(fetchPosts()))
 );
 
 export const updateVote = (commentId, option) => dispatch => (

@@ -3,14 +3,16 @@ import { RECEIVE_POSTS, SORT_POSTS, OrderBy, EDIT_POST, ADD_POST, DELETE_POST, E
 export function PostReducer(state = {}, action) {
   switch (action.type) {
     case RECEIVE_POSTS:
-      return {
-        ...state,
-        posts: action.posts
-      };
+      {
+        return {
+          ...state,
+          posts: action.posts
+        };
+      }
     case SORT_POSTS:
       {
         const unsortedPosts = action.posts;
-        const sortedPosts = SortPosts(unsortedPosts, action.orderBy);
+        const sortedPosts = SortPosts(unsortedPosts, action.orderBy, action.ascending);
 
         return {
           ...state,
@@ -42,11 +44,14 @@ export function PostReducer(state = {}, action) {
     case DELETE_POST:
       {
         const postsToReturn = state.posts.filter((entry) => {
-          return entry.id !== action.postId;
+          return entry.id !== action.post.id;
         });
+
+        postsToReturn.push(action.post);
+
         return {
           ...state,
-          post: postsToReturn
+          posts: postsToReturn
         };
       }
     case EDIT_POST_VOTE:
@@ -75,23 +80,39 @@ export function PostReducer(state = {}, action) {
 };
 
 // Move to utility
-function SortPostsByVotes(postA, postB) {
+function SortPostsByVotesAscending(postA, postB) {
+  return postA.voteScore - postB.voteScore;
+}
+
+function SortPostsByVotesDescending(postA, postB) {
   return postB.voteScore - postA.voteScore;
 }
 
-function SortPostsByTimestamp(postA, postB) {
+function SortPostsByTimestampAscending(postA, postB) {
+  return postA.timestamp - postB.timestamp;
+}
+
+function SortPostsByTimestampDescending(postA, postB) {
   return postB.timestamp - postA.timestamp;
 }
 
-function SortPosts(unsortedPosts, orderBy) {
+function SortPosts(unsortedPosts, orderBy, ascending) {
   const sortedPosts = [...unsortedPosts];
 
   if (orderBy === OrderBy.VOTE_SCORE) {
-    sortedPosts.sort(SortPostsByVotes);
+    if (ascending) {
+      sortedPosts.sort(SortPostsByVotesAscending);
+    } else {
+      sortedPosts.sort(SortPostsByVotesDescending);
+    }
   }
 
   if (orderBy === OrderBy.TIMESTAMP) {
-    sortedPosts.sort(SortPostsByTimestamp);
+    if (ascending) {
+      sortedPosts.sort(SortPostsByTimestampAscending);
+    } else {
+      sortedPosts.sort(SortPostsByTimestampDescending);
+    }
   }
 
   return sortedPosts;

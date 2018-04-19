@@ -9,6 +9,7 @@ import CommentEditor from './CommentEditor';
 import { removePost, updateVote } from '../actions/PostActions';
 import Vote from './Vote';
 import { Link } from 'react-router-dom';
+import { Message, Comment as StyledComment, Header, Divider, Segment } from 'semantic-ui-react';
 
 class Post extends Component {
   state = {};
@@ -62,67 +63,87 @@ class Post extends Component {
         ? this.props.post.deleted
           ? <div>404</div>
           : <div>
+              <Message>
+                <Message.List>
+                  <Message.Header>
+                    <Link
+                    to={"/" + this.props.post.category + "/" + this.props.post.id}
+                    >
+                      <Message.Item>{this.props.post.title}</Message.Item>
+                    </Link>
+                    <Button
+                    text="Edit"
+                    action={this.editPost}
+                    primary={true}
+                    icon="edit"
+                    size="mini"
+                    />
+                    <Button
+                    text="Delete"
+                    action={this.deletePost}
+                    icon="delete"
+                    size="mini"
+                    />
+                  </Message.Header>
+                  {
+                    this.props.hideDetails
+                    ? null
+                    : <Message.Item>{this.props.post.body}</Message.Item>
+                  }
+                  <Message.Item>Author: {this.props.post.author}</Message.Item>
+                  <Message.Item>Comments: {this.props.post.commentCount}</Message.Item>
+                  <Message.Item>Votes: {this.props.post.voteScore}</Message.Item>
+                  <Vote
+                  upVote={this.upVote}
+                  downVote={this.downVote}
+                  />
+                </Message.List>
+              </Message>
               <div>
-                <Link
-                to={"/" + this.props.post.category + "/" + this.props.post.id}
-                >
-                  <div>{this.props.post.title}</div>
-                </Link>
+                <StyledComment.Group>
+                  {
+                    this.props.hideDetails
+                    ? null
+                    : <div>
+                        <Header as='h3' dividing>Comments</Header>
+                        {
+                          this.props.comments.map((comment) => (
+                              <Segment key={comment.id}>
+                                <StyledComment.Avatar as='a' src={require('../assets/avatar.png')}/>
+                                <Comment
+                                comment={comment}
+                                postId={this.props.post.id}
+                                />
+                              </Segment>
+                            ))
+                        }
+                      </div>
+                  }
+                </StyledComment.Group>
+                <div>
                 {
                   this.props.hideDetails
                   ? null
-                  : <div>{this.props.post.body}</div>
+                  : this.state.addingComment
+                    ? <div>
+                        <CommentEditor
+                          postId={this.props.post.id}
+                          onSave={this.saveComment}
+                        />
+                      </div>
+                    : <div>
+                        <Button
+                        text="Add New Comment"
+                        action={this.addComment}
+                        primary={true}
+                        icon="edit"
+                        />
+                      </div>
                 }
-                <div>Author: {this.props.post.author}</div>
-                <div>Comments: {this.props.post.commentCount}</div>
-                <div>Votes: {this.props.post.voteScore}</div>
-                <Vote
-                upVote={this.upVote}
-                downVote={this.downVote}
-                />
+                </div>
               </div>
-              <div>
-              {
-                this.props.hideDetails
-                ? null
-                : this.props.comments.map((comment) => (
-                  <div key={comment.id}>
-                    <Comment
-                    comment={comment}
-                    postId={this.props.post.id}
-                    />
-                  </div>
-                  ))
-              }
-              </div>
-
-              <Button
-              text="Edit"
-              action={this.editPost}
-              />
-              <Button
-              text="Delete"
-              action={this.deletePost}
-              />
-              {
-                this.props.hideDetails
-                ? null
-                : this.state.addingComment
-                  ? <div>
-                      <CommentEditor
-                        postId={this.props.post.id}
-                        onSave={this.saveComment}
-                      />
-                    </div>
-                  : <div>
-                      <Button
-                      text="Add New Comment"
-                      action={this.addComment}
-                      />
-                    </div>
-              }
             </div>
-        : null
+        : <div>404</div>
       }
       </div>
     );
