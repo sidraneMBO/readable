@@ -8,7 +8,7 @@ import Post from './Post';
 import { fetchCategories } from '../actions/CategoryActions';
 import CategoryList from './CategoryList';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 import Button from './Button';
 import Sort from './Sort';
 import { sortPosts, OrderBy } from '../actions/PostActions';

@@ -3,17 +3,13 @@ import { connect } from 'react-redux';
 import { fetchPosts, fetchPostsForCategory } from '../actions/PostActions';
 import { Link } from 'react-router-dom';
 import Post from './Post';
+import { withRouter } from 'react-router-dom';
 
 class PostContainer extends Component {
 
   componentDidMount() {
     // If empty category, show all posts.
-    const category = this.props.category;
-    if (category === "") {
-      this.props.dispatch(fetchPosts());
-    } else {
-      this.props.dispatch(fetchPostsForCategory(category));
-    }
+    this.props.dispatch(fetchPosts());
   }
 
   render() {
@@ -21,13 +17,16 @@ class PostContainer extends Component {
       <div className="PostContainer">
       {
         this.props.posts.map((post) => (
-          <div key={post.id}>
-            <Post
-            postId={post.id}
-            post={post}
-            hideDetails={true}
-            />
-          </div>
+          (post.category === this.props.category || this.props.category === "")
+          ? <div key={post.id}>
+              <Post
+              postId={post.id}
+              post={post}
+              hideDetails={true}
+              />
+            </div>
+          : null
+
         ))
       }
       </div>
@@ -45,4 +44,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(PostContainer);
+export default withRouter(connect(mapStateToProps)(PostContainer));
