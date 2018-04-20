@@ -4,12 +4,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom'
 import { fetchComments } from '../actions/CommentActions';
 import Button from './Button';
-import * as ReadableDataProvider from '../util/ReadableDataProvider';
 import CommentEditor from './CommentEditor';
 import { removePost, updateVote } from '../actions/PostActions';
 import Vote from './Vote';
 import { Link } from 'react-router-dom';
-import { Message, Comment as StyledComment, Header, Divider, Segment } from 'semantic-ui-react';
+import { Message, Comment as StyledComment, Header, Segment } from 'semantic-ui-react';
 
 class Post extends Component {
   state = {};
@@ -143,7 +142,7 @@ class Post extends Component {
                 </div>
               </div>
             </div>
-        : <div>404</div>
+        : <img alt="404" src={require('../assets/404.png')} />
       }
       </div>
     );

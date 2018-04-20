@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as ReadableDataProvider from '../util/ReadableDataProvider';
 import * as GuidUtils from '../util/GuidUtils';
 import Button from './Button';
 import { updateComment, postComment } from '../actions/CommentActions';
@@ -31,7 +30,7 @@ class CommentEditor extends Component {
   addComment = () => {
     const commentToAdd = {
       id: this.state.id,
-      timestamp: (new Date).getTime(),
+      timestamp: (new Date()).getTime(),
       body: this.state.body,
       author: this.state.author,
       parentId: this.state.parentId
@@ -43,7 +42,7 @@ class CommentEditor extends Component {
   editComment = () => {
     const commentToAdd = {
       id: this.state.id,
-      timestamp: (new Date).getTime(),
+      timestamp: (new Date()).getTime(),
       body: this.state.body,
     };
 

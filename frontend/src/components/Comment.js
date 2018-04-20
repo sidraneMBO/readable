@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Button from './Button';
 import CommentEditor from './CommentEditor';
-import * as ReadableDataProvider from '../util/ReadableDataProvider';
 import { removeComment, updateVote } from '../actions/CommentActions';
 import { connect } from 'react-redux';
 import Vote from './Vote';
-import { Comment as StyledComment, Form, Header, Icon } from 'semantic-ui-react';
+import { Comment as StyledComment, Icon } from 'semantic-ui-react';
 
 class Comment extends Component {
   state: {};

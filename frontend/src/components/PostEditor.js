@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as ReadableDataProvider from '../util/ReadableDataProvider';
 import Button from './Button';
 import * as GuidUtils from '../util/GuidUtils';
 import { updatePost, postPost } from '../actions/PostActions';
@@ -35,7 +34,7 @@ class PostEditor extends Component {
   addPost = () => {
     const postToAdd = {
       id: this.state.id,
-      timestamp: (new Date).getTime(),
+      timestamp: (new Date()).getTime(),
       title: this.state.title,
       body: this.state.body,
       author: this.state.author,
@@ -48,7 +47,7 @@ class PostEditor extends Component {
   editPost = () => {
     const postToAdd = {
       id: this.state.id,
-      timestamp: (new Date).getTime(),
+      timestamp: (new Date()).getTime(),
       title: this.state.title,
       body: this.state.body,
     };

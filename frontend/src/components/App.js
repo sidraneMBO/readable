@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
 import '../styles/App.css';
 import { Route } from 'react-router-dom';
 import PostsContainer from './PostsContainer';
@@ -33,12 +32,18 @@ class App extends Component {
 
   sortPostsByVotes = () => {
     this.props.dispatch(sortPosts(this.props.posts, OrderBy.VOTE_SCORE, this.state.sortVoteAscending));
-    this.state.sortVoteAscending = !this.state.sortVoteAscending;
+
+    this.setState({
+      sortVoteAscending: !this.state.sortVoteAscending
+    });
   };
 
   sortPostsByTimestamp = () => {
     this.props.dispatch(sortPosts(this.props.posts, OrderBy.TIMESTAMP, this.state.sortTimestampAscending));
-    this.state.sortTimestampAscending = !this.state.sortTimestampAscending;
+
+    this.setState({
+      sortTimestampAscending: !this.state.sortTimestampAscending
+    });
   };
 
   getPostDetails = (postId: string) => {
